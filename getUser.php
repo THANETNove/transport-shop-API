@@ -30,7 +30,7 @@ if (isset($_GET)) {
             echo json_encode($data);
         } else {
             echo "0 results";
-        }
+        } //
     } else echo "Welcome Master UNG";
 }
 $conn->close();
