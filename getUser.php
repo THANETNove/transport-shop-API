@@ -4,10 +4,7 @@ header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: GET");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "call_credit_checker";
+include 'db_config.php';
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
