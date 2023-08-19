@@ -14,7 +14,18 @@ if ($conn->connect_error) {
 
 if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
     $username = $_POST['username'];
+    $customerCode = $_POST['customerCode'];
     $email = $_POST['email'];
+    $password = $_POST['password'];
+    $name_surname = $_POST['name_surname'];
+    $phone_number = $_POST['phone_number'];
+    $address = $_POST['address'];
+    $subdistrict = $_POST['subdistrict'];
+    $district = $_POST['district'];
+    $province = $_POST['province'];
+    $zipCode = $_POST['zipCode'];
+
+
 
     // Check for duplicate username
     $check_username_sql = "SELECT * FROM users WHERE username = ?";
@@ -36,8 +47,9 @@ if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
         echo json_encode(['error' => 'Email already exists!']);
     } else {
         // If no duplicates found, insert the new user
-        $stmt = $conn->prepare("INSERT INTO users (username,customerCode, email,password,name_surname,phone_number,address,subdistrict,district,province,zipCode) VALUES (?, ?)");
-        $stmt->bind_param("ss", $username, $customerCode, $email, $password, $name_surname, $phone_number, $address, $subdistrict, $district, $province, $zipCode);
+        $stmt = $conn->prepare("INSERT INTO users (username, customerCode, email, password, name_surname, phone_number, address, subdistrict, district, province, zipCode) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssssssssss", $username, $customerCode, $email, $password, $name_surname, $phone_number, $address, $subdistrict, $district, $province, $zipCode);
+
 
         if ($stmt->execute()) {
             echo json_encode(['message' => 'User added successfully!']);
