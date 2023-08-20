@@ -52,7 +52,18 @@ if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
 
 
         if ($stmt->execute()) {
-            echo json_encode(['message' => 'User added successfully!']);
+            $last_id = $conn->insert_id;
+
+            // Query the database to get the inserted user's data using that ID
+            $select_sql = "SELECT * FROM users WHERE id = ?";
+            $stmt = $conn->prepare($select_sql);
+            $stmt->bind_param("i", $last_id);
+            $stmt->execute();
+            $user_data = $stmt->get_result()->fetch_assoc();
+
+            // Return the user data in the JSON response
+            echo json_encode(['message' => 'User added successfully!', 'user_data' => $user_data]);
+            /*  echo json_encode(['message' => 'User added successfully!']); */
         } else {
             echo json_encode(['error' => 'Error adding user.']);
         }
