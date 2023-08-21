@@ -16,7 +16,7 @@ if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
     $username = $_POST['username'];
     $customerCode = $_POST['customerCode'];
     $email = $_POST['email'];
-    $password = $_POST['password'];
+    $password =  password_hash($_POST['password'], PASSWORD_DEFAULT);
     $name_surname = $_POST['name_surname'];
     $phone_number = $_POST['phone_number'];
     $address = $_POST['address'];
