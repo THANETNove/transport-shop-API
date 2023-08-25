@@ -13,16 +13,18 @@ if ($conn->connect_error) {
 }
 
 if (isset($_GET['isAdd']) && $_GET['isAdd'] == 'true') {
-
-    $select_sql = "SELECT * FROM statusList";
+    $id = $_GET['id'];
+    $select_sql = "SELECT * FROM product_type WHERE id=?";
     $stmt = $conn->prepare($select_sql);
+    $stmt->bind_param("i", $id); // Assuming 'id' is an integer in your database
     $stmt->execute();
     $result = $stmt->get_result();
     $data_array = [];
     while ($row = $result->fetch_assoc()) {
         $data_array[] = $row;
     }
-    echo json_encode(['message' => 'status get successfully!', 'status_list_data' => $data_array]);
+    
+    echo json_encode(['message' => 'product type get successfully!', 'product_type_data' => $data_array]);
 } else {
     echo json_encode(['error' => 'Welcome Master UNG']);
 }

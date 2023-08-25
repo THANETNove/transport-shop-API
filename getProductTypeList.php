@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 
 if (isset($_GET['isAdd']) && $_GET['isAdd'] == 'true') {
 
-    $select_sql = "SELECT * FROM statusList";
+    $select_sql = "SELECT * FROM product_type";
     $stmt = $conn->prepare($select_sql);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -22,7 +22,7 @@ if (isset($_GET['isAdd']) && $_GET['isAdd'] == 'true') {
     while ($row = $result->fetch_assoc()) {
         $data_array[] = $row;
     }
-    echo json_encode(['message' => 'status get successfully!', 'status_list_data' => $data_array]);
+    echo json_encode(['message' => 'product type get successfully!', 'product_type_data' => $data_array]);
 } else {
     echo json_encode(['error' => 'Welcome Master UNG']);
 }
