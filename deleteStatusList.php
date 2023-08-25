@@ -13,11 +13,12 @@ if ($conn->connect_error) {
 }
 
 if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
-    $statusProduct = $_POST['statusProduct'];
+    $id = $_POST['id'];
 
-    // If no duplicates found, insert the new user
-    $stmt = $conn->prepare("INSERT INTO statusList (statusProduct) VALUES (?)");
-    $stmt->bind_param("s", $statusProduct);
+    // Prepare the DELETE statement
+    $stmt = $conn->prepare("DELETE FROM statusList WHERE id = ?");
+    $stmt->bind_param("i", $id);
+
 
 
     if ($stmt->execute()) {
@@ -30,9 +31,9 @@ if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
             $data_array[] = $row;
         }
 
-        echo json_encode(['message' => 'status added successfully!', 'status_list_data' => $data_array]);
+        echo json_encode(['message' => 'Status Delete successfully!', 'status_list_data' => $data_array]);
     } else {
-        echo json_encode(['error' => 'Error adding status.']);
+        echo json_encode(['error' => 'Error Status Delete.']);
     }
 } else {
     echo json_encode(['error' => 'Welcome Master UNG']);

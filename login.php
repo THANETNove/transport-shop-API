@@ -35,7 +35,7 @@ if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
             echo json_encode(['error' => 'Incorrect password!']);
         }
     } else {
-        echo json_encode(['error' => 'User not found!']);
+        echo json_encode(['error' => 'Login not found!']);
     }
 } else {
     echo json_encode(['error' => 'Invalid request!']);
