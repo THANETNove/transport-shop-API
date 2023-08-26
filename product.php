@@ -43,54 +43,78 @@ if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
     $payment_amount_chinese_thai_delivery = $_POST['payment_amount_chinese_thai_delivery'];
     $product_type = $_POST['product_type'];
     $current_time = date('YmdHis'); // ปัจจุบันในรูปแบบ YYYYMMDDHHMMSS
-    $image_extension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
-    $image =  $current_time . '_' . generateRandomString() . '.' . $image_extension;
     $status_recorder = $_POST['status_recorder'];
+
+    $upload_dir = 'image/product/';  // This specifies the upload directory
+
+    if (isset($_FILES["image"]) && is_uploaded_file($_FILES["image"]["tmp_name"]) && $_FILES["image"]["error"] === 0) {
+        $avatar_name = $_FILES["image"]["name"];
+        $avatar_tmp_name = $_FILES["image"]["tmp_name"];
+
+        $random_name = rand(1000, 1000000) . "-" . $current_time . '_' . $avatar_name;
+        $upload_name = $upload_dir . strtolower($random_name);
+        $upload_name = preg_replace('/\s+/', '-', $upload_name);
+        $image =  $random_name;
+
+        if (move_uploaded_file($avatar_tmp_name, $upload_name)) {
+
+            $stmt = $conn->prepare("INSERT INTO product (
+                customer_code, tech_china, warehouse_code, cabinet_number, chinese_warehouse, 
+                close_cabinet, to_thailand, parcel_status, quantity, size, cue_per_piece, 
+                weight, total_queue, payment_amount_chinese_thai_delivery, product_type,image, 
+                status_recorder) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+
+            $stmt->bind_param(
+                "sssssssssssssssss",
+                $customer_code,
+                $tech_china,
+                $warehouse_code,
+                $cabinet_number,
+                $chinese_warehouse,
+                $close_cabinet,
+                $to_thailand,
+                $parcel_status,
+                $quantity,
+                $size,
+                $cue_per_piece,
+                $weight,
+                $total_queue,
+                $payment_amount_chinese_thai_delivery,
+                $product_type,
+                $image,
+                $status_recorder
+            );
+
+
+            if ($stmt->execute()) {
+                $select_sql = "SELECT * FROM product";
+                $stmt = $conn->prepare($select_sql);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                $data_array = [];
+                while ($row = $result->fetch_assoc()) {
+                    $data_array[] = $row;
+                }
+
+                echo json_encode(['message' => 'product added successfully!', 'product_data' => $data_array]);
+            } else {
+                echo json_encode(['error' => 'Error adding product.']);
+            }
+        } else {
+            echo json_encode(['error' => 'Error adding image.']);
+        }
+    } else {
+        $response = array(
+            "status" => "error",
+            "error" => true,
+            "message" => "No file was sent!"
+        );
+    }
+
 
 
     // If no duplicates found, insert the new user
-    $stmt = $conn->prepare("INSERT INTO product (
-        customer_code, tech_china, warehouse_code, cabinet_number, chinese_warehouse, 
-        close_cabinet, to_thailand, parcel_status, quantity, size, cue_per_piece, 
-        weight, total_queue, payment_amount_chinese_thai_delivery, product_type,image, 
-        status_recorder) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
-    $stmt->bind_param(
-        "sssssssssssssssss",
-        $customer_code,
-        $tech_china,
-        $warehouse_code,
-        $cabinet_number,
-        $chinese_warehouse,
-        $close_cabinet,
-        $to_thailand,
-        $parcel_status,
-        $quantity,
-        $size,
-        $cue_per_piece,
-        $weight,
-        $total_queue,
-        $payment_amount_chinese_thai_delivery,
-        $product_type,
-        $image,
-        $status_recorder
-    );
-
-
-    if ($stmt->execute()) {
-        $select_sql = "SELECT * FROM product";
-        $stmt = $conn->prepare($select_sql);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $data_array = [];
-        while ($row = $result->fetch_assoc()) {
-            $data_array[] = $row;
-        }
-
-        echo json_encode(['message' => 'product added successfully!', 'product_data' => $data_array]);
-    } else {
-        echo json_encode(['error' => 'Error adding product.']);
-    }
 } else {
     echo json_encode(['error' => 'Welcome Master UNG']);
 }
