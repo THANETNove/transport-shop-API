@@ -45,7 +45,7 @@ if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
     $current_time = date('YmdHis'); // ปัจจุบันในรูปแบบ YYYYMMDDHHMMSS
     $status_recorder = $_POST['status_recorder'];
 
-    $upload_dir = 'image/product/';  // This specifies the upload directory
+    include 'config_image_path.php'; // This specifies the upload directory
 
     if (isset($_FILES["image"]) && is_uploaded_file($_FILES["image"]["tmp_name"]) && $_FILES["image"]["error"] === 0) {
         $avatar_name = $_FILES["image"]["name"];
