@@ -12,19 +12,27 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+function generateRandomString($length = 10)
+{
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
+}
+
+
 if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
 
     $customer_code = $_POST['customer_code'];
     $tech_china = $_POST['tech_china'];
     $warehouse_code = $_POST['warehouse_code'];
     $cabinet_number = $_POST['cabinet_number'];
-
-    $chinese_warehouse_date = DateTime::createFromFormat('d-m-Y', $_POST['chinese_warehouse']);
-    $chinese_warehouse = $chinese_warehouse_date ? $chinese_warehouse_date->format('d-m-Y') : null;
-    $close_cabinet_date = DateTime::createFromFormat('d-m-Y', $_POST['close_cabinet']);
-    $close_cabinet = $close_cabinet_date ? $close_cabinet_date->format('d-m-Y') : null;
-    $to_thailand_date = DateTime::createFromFormat('d-m-Y', $_POST['to_thailand']);
-    $to_thailand = $to_thailand_date ? $to_thailand_date->format('d-m-Y') : null;
+    $chinese_warehouse =  $_POST['chinese_warehouse'];
+    $close_cabinet = $_POST['close_cabinet'];
+    $to_thailand = $_POST['to_thailand'];
 
     $parcel_status = $_POST['parcel_status'];
     $quantity = $_POST['quantity'];
@@ -35,8 +43,8 @@ if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
     $payment_amount_chinese_thai_delivery = $_POST['payment_amount_chinese_thai_delivery'];
     $product_type = $_POST['product_type'];
     $current_time = date('YmdHis'); // ปัจจุบันในรูปแบบ YYYYMMDDHHMMSS
-    $image_extension = pathinfo($_FILES['image']['name']);
-    $image = $current_time . '.' . $image_extension;
+    $image_extension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+    $image =  $current_time . '_' . generateRandomString() . '.' . $image_extension;
     $status_recorder = $_POST['status_recorder'];
 
 
