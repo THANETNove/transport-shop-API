@@ -23,7 +23,7 @@ if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
 
 
     if ($stmt->execute()) {
-        $select_sql = "SELECT * FROM product_type";
+        $select_sql = "SELECT * FROM product_type ORDER BY id DESC";
         $stmt = $conn->prepare($select_sql);
         $stmt->execute();
         $result = $stmt->get_result();

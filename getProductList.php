@@ -10,7 +10,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$select_sql = "SELECT * FROM product";
+$select_sql = "SELECT * FROM product ORDER BY id DESC";
 $stmt = $conn->prepare($select_sql);
 
 if ($stmt->execute()) {
