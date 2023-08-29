@@ -86,6 +86,14 @@ if (isset($_FILES["image"]) && is_uploaded_file($_FILES["image"]["tmp_name"]) &&
         );
 
         if ($stmt->execute()) {
+            $select_sql = "SELECT * FROM product ORDER BY id DESC";
+            $stmt = $conn->prepare($select_sql);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $data_array = [];
+            while ($row = $result->fetch_assoc()) {
+                $data_array[] = $row;
+            }
             echo json_encode(['message' => 'product updated successfully!', 'product_data' => $data_array]);
         } else {
             echo json_encode(['error' => 'Error updating product.']);
@@ -123,6 +131,14 @@ if (isset($_FILES["image"]) && is_uploaded_file($_FILES["image"]["tmp_name"]) &&
     );
 
     if ($stmt->execute()) {
+        $select_sql = "SELECT * FROM product ORDER BY id DESC";
+        $stmt = $conn->prepare($select_sql);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $data_array = [];
+        while ($row = $result->fetch_assoc()) {
+            $data_array[] = $row;
+        }
         echo json_encode(['message' => 'product updated successfully!', 'product_data' => $data_array]);
     } else {
         echo json_encode(['error' => 'Error updating product.']);
