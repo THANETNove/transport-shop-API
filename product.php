@@ -104,11 +104,47 @@ if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
             echo json_encode(['error' => 'Error adding image.']);
         }
     } else {
-        $response = array(
-            "status" => "error",
-            "error" => true,
-            "message" => "No file was sent!"
+        $stmt = $conn->prepare("INSERT INTO product (
+            customer_code, tech_china, warehouse_code, cabinet_number, chinese_warehouse, 
+            close_cabinet, to_thailand, parcel_status, quantity, size, cue_per_piece, 
+            weight, total_queue, payment_amount_chinese_thai_delivery, product_type, 
+            status_recorder) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+
+        $stmt->bind_param(
+            "ssssssssssssssss",
+            $customer_code,
+            $tech_china,
+            $warehouse_code,
+            $cabinet_number,
+            $chinese_warehouse,
+            $close_cabinet,
+            $to_thailand,
+            $parcel_status,
+            $quantity,
+            $size,
+            $cue_per_piece,
+            $weight,
+            $total_queue,
+            $payment_amount_chinese_thai_delivery,
+            $product_type,
+            $status_recorder
         );
+
+
+        if ($stmt->execute()) {
+            $select_sql = "SELECT * FROM product ORDER BY id DESC";
+            $stmt = $conn->prepare($select_sql);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $data_array = [];
+            while ($row = $result->fetch_assoc()) {
+                $data_array[] = $row;
+            }
+
+            echo json_encode(['message' => 'product added successfully!', 'product_data' => $data_array]);
+        } else {
+            echo json_encode(['error' => 'Error adding product.']);
+        }
     }
 
 
