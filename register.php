@@ -42,10 +42,19 @@ if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
     $stmt->execute();
     $email_result = $stmt->get_result();
 
+    // customerCode
+    $check_customerCode_sql = "SELECT * FROM users WHERE customerCode = ?";
+    $stmt = $conn->prepare($check_customerCode_sql);
+    $stmt->bind_param("s", $customerCode);
+    $stmt->execute();
+    $customerCode_result = $stmt->get_result();
+
     if ($username_result->num_rows > 0) {
-        echo json_encode(['error' => 'Username already exists!']);
+        echo json_encode(['error' => 'username_exists']);
     } elseif ($email_result->num_rows > 0) {
-        echo json_encode(['error' => 'Email already exists!']);
+        echo json_encode(['error' => 'email_exists']);
+    } elseif ($customerCode_result->num_rows > 0) {
+        echo json_encode(['error' => 'customerCode_exists']);
     } else {
         // If no duplicates found, insert the new user
         $stmt = $conn->prepare("INSERT INTO users (username, customerCode, email, password, name_surname, phone_number, address, subdistrict, district, province, zipCode,status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)");
