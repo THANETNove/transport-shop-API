@@ -40,6 +40,7 @@ if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
     $height_size = $_POST['height_size'];
     $cue_per_piece = $_POST['cue_per_piece'];
     $weight = $_POST['weight'];
+    $total_weight = $_POST['total_weight'];
     $total_queue = $_POST['total_queue'];
     $payment_amount_chinese_thai_delivery = $_POST['payment_amount_chinese_thai_delivery'];
     $product_type = $_POST['product_type'];
@@ -62,11 +63,11 @@ if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
             $stmt = $conn->prepare("INSERT INTO product (
                 customer_code, tech_china, warehouse_code, cabinet_number, chinese_warehouse, 
                 close_cabinet, to_thailand, parcel_status, quantity, wide_size, long_size, height_size, cue_per_piece, 
-                weight, total_queue, payment_amount_chinese_thai_delivery, product_type, image, 
-                status_recorder) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                weight,total_weight, total_queue, payment_amount_chinese_thai_delivery, product_type, image, 
+                status_recorder) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
             $stmt->bind_param(
-                "sssssssssssssssssss",
+                "ssssssssssssssssssss",
                 $customer_code,
                 $tech_china,
                 $warehouse_code,
@@ -81,6 +82,7 @@ if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
                 $height_size,
                 $cue_per_piece,
                 $weight,
+                $total_weight,
                 $total_queue,
                 $payment_amount_chinese_thai_delivery,
                 $product_type,
@@ -111,11 +113,11 @@ if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
         $stmt = $conn->prepare("INSERT INTO product (
             customer_code, tech_china, warehouse_code, cabinet_number, chinese_warehouse, 
             close_cabinet, to_thailand, parcel_status, quantity,  wide_size,long_size,height_size, cue_per_piece, 
-            weight, total_queue, payment_amount_chinese_thai_delivery, product_type, 
-            status_recorder) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            weight,total_weight, total_queue, payment_amount_chinese_thai_delivery, product_type, 
+            status_recorder) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
         $stmt->bind_param(
-            "ssssssssssssssssss",
+            "sssssssssssssssssss",
             $customer_code,
             $tech_china,
             $warehouse_code,
@@ -130,6 +132,7 @@ if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
             $height_size,
             $cue_per_piece,
             $weight,
+            $total_weight,
             $total_queue,
             $payment_amount_chinese_thai_delivery,
             $product_type,
