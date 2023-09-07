@@ -33,10 +33,11 @@ if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
     $chinese_warehouse =  $_POST['chinese_warehouse'];
     $close_cabinet = $_POST['close_cabinet'];
     $to_thailand = $_POST['to_thailand'];
-
     $parcel_status = $_POST['parcel_status'];
     $quantity = $_POST['quantity'];
-    $size = $_POST['size'];
+    $wide_size = $_POST['wide_size'];
+    $long_size = $_POST['long_size'];
+    $height_size = $_POST['height_size'];
     $cue_per_piece = $_POST['cue_per_piece'];
     $weight = $_POST['weight'];
     $total_queue = $_POST['total_queue'];
@@ -60,12 +61,12 @@ if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
 
             $stmt = $conn->prepare("INSERT INTO product (
                 customer_code, tech_china, warehouse_code, cabinet_number, chinese_warehouse, 
-                close_cabinet, to_thailand, parcel_status, quantity, size, cue_per_piece, 
-                weight, total_queue, payment_amount_chinese_thai_delivery, product_type,image, 
-                status_recorder) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                close_cabinet, to_thailand, parcel_status, quantity, wide_size, long_size, height_size, cue_per_piece, 
+                weight, total_queue, payment_amount_chinese_thai_delivery, product_type, image, 
+                status_recorder) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
             $stmt->bind_param(
-                "sssssssssssssssss",
+                "sssssssssssssssssss",
                 $customer_code,
                 $tech_china,
                 $warehouse_code,
@@ -75,7 +76,9 @@ if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
                 $to_thailand,
                 $parcel_status,
                 $quantity,
-                $size,
+                $wide_size, // เพิ่ม wide_size ตรงนี้
+                $long_size,
+                $height_size,
                 $cue_per_piece,
                 $weight,
                 $total_queue,
@@ -84,6 +87,7 @@ if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
                 $image,
                 $status_recorder
             );
+
 
 
             if ($stmt->execute()) {
@@ -106,12 +110,12 @@ if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
     } else {
         $stmt = $conn->prepare("INSERT INTO product (
             customer_code, tech_china, warehouse_code, cabinet_number, chinese_warehouse, 
-            close_cabinet, to_thailand, parcel_status, quantity, size, cue_per_piece, 
+            close_cabinet, to_thailand, parcel_status, quantity,  wide_size,long_size,height_size, cue_per_piece, 
             weight, total_queue, payment_amount_chinese_thai_delivery, product_type, 
-            status_recorder) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            status_recorder) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
         $stmt->bind_param(
-            "ssssssssssssssss",
+            "ssssssssssssssssss",
             $customer_code,
             $tech_china,
             $warehouse_code,
@@ -121,7 +125,9 @@ if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
             $to_thailand,
             $parcel_status,
             $quantity,
-            $size,
+            $wide_size,
+            $long_size,
+            $height_size,
             $cue_per_piece,
             $weight,
             $total_queue,
