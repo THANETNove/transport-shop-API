@@ -25,9 +25,12 @@ $to_thailand = $_POST['to_thailand'];
 
 $parcel_status = $_POST['parcel_status'];
 $quantity = $_POST['quantity'];
-$size = $_POST['size'];
+$wide_size = $_POST['wide_size'];
+$long_size = $_POST['long_size'];
+$height_size = $_POST['height_size'];
 $cue_per_piece = $_POST['cue_per_piece'];
 $weight = $_POST['weight'];
+$total_weight = $_POST['total_weight'];
 $total_queue = $_POST['total_queue'];
 $payment_amount_chinese_thai_delivery = $_POST['payment_amount_chinese_thai_delivery'];
 $product_type = $_POST['product_type'];
@@ -59,12 +62,12 @@ if (isset($_FILES["image"]) && is_uploaded_file($_FILES["image"]["tmp_name"]) &&
         // อัปเดตข้อมูลในฐานข้อมูลเมื่อรูปภาพเปลี่ยนแปลง
         $stmt = $conn->prepare("UPDATE product SET
         customer_code=?, tech_china=?, warehouse_code=?, cabinet_number=?, chinese_warehouse=?, 
-        close_cabinet=?, to_thailand=?, parcel_status=?, quantity=?, size=?, cue_per_piece=?, 
-        weight=?, total_queue=?, payment_amount_chinese_thai_delivery=?, product_type=?,image=?, 
+        close_cabinet=?, to_thailand=?, parcel_status=?, quantity=?,  wide_size=?,long_size=?,height_size=?, cue_per_piece=?, 
+        weight=?, total_weight=?,total_queue=?, payment_amount_chinese_thai_delivery=?, product_type=?,image=?, 
         status_recorder=? WHERE id=?");
 
         $stmt->bind_param(
-            "ssssssssssssssssss",
+            "sssssssssssssssssssss",
             $customer_code,
             $tech_china,
             $warehouse_code,
@@ -74,9 +77,12 @@ if (isset($_FILES["image"]) && is_uploaded_file($_FILES["image"]["tmp_name"]) &&
             $to_thailand,
             $parcel_status,
             $quantity,
-            $size,
+            $wide_size,
+            $long_size,
+            $height_size,
             $cue_per_piece,
             $weight,
+            $total_weight,
             $total_queue,
             $payment_amount_chinese_thai_delivery,
             $product_type,
@@ -105,12 +111,12 @@ if (isset($_FILES["image"]) && is_uploaded_file($_FILES["image"]["tmp_name"]) &&
     // อัปเดตข้อมูลในฐานข้อมูลเมื่อไม่มีการเปลี่ยนแปลงภาพ
     $stmt = $conn->prepare("UPDATE product SET
         customer_code=?, tech_china=?, warehouse_code=?, cabinet_number=?, chinese_warehouse=?, 
-        close_cabinet=?, to_thailand=?, parcel_status=?, quantity=?, size=?, cue_per_piece=?, 
-        weight=?, total_queue=?, payment_amount_chinese_thai_delivery=?, product_type=?, 
+        close_cabinet=?, to_thailand=?, parcel_status=?, quantity=?, wide_size=?,long_size=?,height_size=?, cue_per_piece=?, 
+        weight=?,total_weight=?, total_queue=?, payment_amount_chinese_thai_delivery=?, product_type=?, 
         status_recorder=? WHERE id=?");
 
     $stmt->bind_param(
-        "sssssssssssssssss",
+        "ssssssssssssssssssss",
         $customer_code,
         $tech_china,
         $warehouse_code,
@@ -120,9 +126,12 @@ if (isset($_FILES["image"]) && is_uploaded_file($_FILES["image"]["tmp_name"]) &&
         $to_thailand,
         $parcel_status,
         $quantity,
-        $size,
+        $wide_size,
+        $long_size,
+        $height_size,
         $cue_per_piece,
         $weight,
+        $total_weight,
         $total_queue,
         $payment_amount_chinese_thai_delivery,
         $product_type,
