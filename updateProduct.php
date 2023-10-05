@@ -64,7 +64,7 @@ if (isset($_FILES["image"]) && is_uploaded_file($_FILES["image"]["tmp_name"]) &&
         $stmt = $conn->prepare("UPDATE product SET
         customer_code=?, tech_china=?, warehouse_code=?, cabinet_number=?, chinese_warehouse=?, 
         close_cabinet=?, to_thailand=?, parcel_status=?, quantity=?,  wide_size=?,long_size=?,height_size=?, cue_per_piece=?, 
-        weight=?,inputFields, total_weight=?,total_queue=?, payment_amount_chinese_thai_delivery=?, product_type=?,image=?, 
+        weight=?,inputFields=?, total_weight=?,total_queue=?, payment_amount_chinese_thai_delivery=?, product_type=?,image=?, 
         status_recorder=? WHERE id=?");
 
         $stmt->bind_param(
@@ -114,7 +114,7 @@ if (isset($_FILES["image"]) && is_uploaded_file($_FILES["image"]["tmp_name"]) &&
     $stmt = $conn->prepare("UPDATE product SET
         customer_code=?, tech_china=?, warehouse_code=?, cabinet_number=?, chinese_warehouse=?, 
         close_cabinet=?, to_thailand=?, parcel_status=?, quantity=?, wide_size=?,long_size=?,height_size=?, cue_per_piece=?, 
-        weight=?,inputFields,total_weight=?, total_queue=?, payment_amount_chinese_thai_delivery=?, product_type=?, 
+        weight=?,inputFields=?,total_weight=?, total_queue=?, payment_amount_chinese_thai_delivery=?, product_type=?, 
         status_recorder=? WHERE id=?");
 
     $stmt->bind_param(
