@@ -30,6 +30,7 @@ $long_size = $_POST['long_size'];
 $height_size = $_POST['height_size'];
 $cue_per_piece = $_POST['cue_per_piece'];
 $weight = $_POST['weight'];
+$inputFields = json_decode($_POST['inputFields'], true);
 $total_weight = $_POST['total_weight'];
 $total_queue = $_POST['total_queue'];
 $payment_amount_chinese_thai_delivery = $_POST['payment_amount_chinese_thai_delivery'];
@@ -63,11 +64,11 @@ if (isset($_FILES["image"]) && is_uploaded_file($_FILES["image"]["tmp_name"]) &&
         $stmt = $conn->prepare("UPDATE product SET
         customer_code=?, tech_china=?, warehouse_code=?, cabinet_number=?, chinese_warehouse=?, 
         close_cabinet=?, to_thailand=?, parcel_status=?, quantity=?,  wide_size=?,long_size=?,height_size=?, cue_per_piece=?, 
-        weight=?, total_weight=?,total_queue=?, payment_amount_chinese_thai_delivery=?, product_type=?,image=?, 
+        weight=?,inputFields, total_weight=?,total_queue=?, payment_amount_chinese_thai_delivery=?, product_type=?,image=?, 
         status_recorder=? WHERE id=?");
 
         $stmt->bind_param(
-            "sssssssssssssssssssss",
+            "ssssssssssssssssssssss",
             $customer_code,
             $tech_china,
             $warehouse_code,
@@ -82,6 +83,7 @@ if (isset($_FILES["image"]) && is_uploaded_file($_FILES["image"]["tmp_name"]) &&
             $height_size,
             $cue_per_piece,
             $weight,
+            json_encode($inputFields),
             $total_weight,
             $total_queue,
             $payment_amount_chinese_thai_delivery,
@@ -112,11 +114,11 @@ if (isset($_FILES["image"]) && is_uploaded_file($_FILES["image"]["tmp_name"]) &&
     $stmt = $conn->prepare("UPDATE product SET
         customer_code=?, tech_china=?, warehouse_code=?, cabinet_number=?, chinese_warehouse=?, 
         close_cabinet=?, to_thailand=?, parcel_status=?, quantity=?, wide_size=?,long_size=?,height_size=?, cue_per_piece=?, 
-        weight=?,total_weight=?, total_queue=?, payment_amount_chinese_thai_delivery=?, product_type=?, 
+        weight=?,inputFields,total_weight=?, total_queue=?, payment_amount_chinese_thai_delivery=?, product_type=?, 
         status_recorder=? WHERE id=?");
 
     $stmt->bind_param(
-        "ssssssssssssssssssss",
+        "sssssssssssssssssssss",
         $customer_code,
         $tech_china,
         $warehouse_code,
@@ -131,6 +133,7 @@ if (isset($_FILES["image"]) && is_uploaded_file($_FILES["image"]["tmp_name"]) &&
         $height_size,
         $cue_per_piece,
         $weight,
+        json_encode($inputFields),
         $total_weight,
         $total_queue,
         $payment_amount_chinese_thai_delivery,
