@@ -10,8 +10,9 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$select_sql = "SELECT * FROM product ORDER BY id DESC";
+$select_sql = "SELECT * FROM product WHERE status_bill IS NULL ORDER BY id DESC";
 $stmt = $conn->prepare($select_sql);
+
 
 if ($stmt->execute()) {
     $result = $stmt->get_result();

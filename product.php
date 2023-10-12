@@ -144,7 +144,7 @@ if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
 
 
         if ($stmt->execute()) {
-            $select_sql = "SELECT * FROM product ORDER BY id DESC";
+            $select_sql = "SELECT * FROM product  WHERE status_bill IS NULL ORDER BY id DESC";
             $stmt = $conn->prepare($select_sql);
             $stmt->execute();
             $result = $stmt->get_result();
