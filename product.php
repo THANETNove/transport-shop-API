@@ -60,7 +60,7 @@ if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
         $image =  $random_name;
 
         if (move_uploaded_file($avatar_tmp_name, $upload_name)) {
-
+//inputFields
             $stmt = $conn->prepare("INSERT INTO product (
                 customer_code, tech_china, warehouse_code, cabinet_number, chinese_warehouse, 
                 close_cabinet, to_thailand, parcel_status, quantity, wide_size, long_size, height_size, cue_per_piece, 
@@ -144,7 +144,7 @@ if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
 
 
         if ($stmt->execute()) {
-            $select_sql = "SELECT * FROM product  WHERE status_bill IS NULL ORDER BY id DESC";
+            $select_sql = "SELECT * FROM product  WHERE billing_status IS NULL       ORDER BY id DESC";
             $stmt = $conn->prepare($select_sql);
             $stmt->execute();
             $result = $stmt->get_result();
