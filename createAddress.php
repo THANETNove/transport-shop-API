@@ -22,8 +22,6 @@ if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
     $provinces = $_POST['provinces'];
     $zip_code = $_POST['zip_code'];
 
-echo $id_user, $username, $tel, $address, $subdistricts,$districts ,$provinces,$zip_code;
-
     // If no duplicates found, insert the new user
     $stmt = $conn->prepare("INSERT INTO address (id_user, username, tel, address, subdistricts,districts ,provinces,zip_code) VALUES (?,?,?,?,?,?,?,?)");
     $stmt->bind_param("ssssssss", $id_user, $username, $tel, $address, $subdistricts,$districts ,$provinces,$zip_code);
