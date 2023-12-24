@@ -45,7 +45,7 @@ if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
     $total_queue = $_POST['total_queue'];
     $payment_amount_chinese_thai_delivery = $_POST['payment_amount_chinese_thai_delivery'];
     $product_type = $_POST['product_type'];
-    $thinkingFrom =$POST["thinkingFrom"];
+    $thinkingFrom =$_POST["thinkingFrom"];
     $current_time = date('YmdHis'); // ปัจจุบันในรูปแบบ YYYYMMDDHHMMSS
     $status_recorder = $_POST['status_recorder'];
 
