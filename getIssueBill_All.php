@@ -22,6 +22,7 @@ if (isset($_GET['isAdd']) && $_GET['isAdd'] == 'true') {
     bill.id_address,
     bill.id_product,
     bill.status,
+    bill.image as billImage,
     address.id as addressId,
     address.username,
     address.tel,
@@ -33,7 +34,7 @@ if (isset($_GET['isAdd']) && $_GET['isAdd'] == 'true') {
     users.customerCode
 FROM bill
 LEFT JOIN product ON bill.id = product.billing_id
-LEFT JOIN address ON bill.id_address = address.id
+ JOIN address ON bill.id_address = address.id
  JOIN users ON bill.id_user = users.id";
    /*  $select_sql = "SELECT  product.*, bill.id as billId, bill.created_at as billCreated_at, bill.updated_at as billUpdated_at,
     bill.id_user,bill.id_address, bill.id_product, bill.status FROM bill LEFT JOIN product ON bill.id = product.billing_id WHERE bill.id_user=?"; */
@@ -52,7 +53,7 @@ LEFT JOIN address ON bill.id_address = address.id
         $provinces = $row['provinces'];
         $zip_code = $row['zip_code'];
         $username = $row['username'];
-        $image = $row['image'];
+        $billImage = $row['billImage'];
         $customerCode = $row['customerCode'];
 
     
@@ -68,7 +69,7 @@ LEFT JOIN address ON bill.id_address = address.id
                 'provinces' => $provinces,
                 'zip_code' => $zip_code,
                 'username' => $username,
-                'image' => $image,
+                'billImage' => $billImage,
                 'billUpdated_at' => $billUpdated_at,
                 'customerCode' => $customerCode,
                 'dataBill' => [],

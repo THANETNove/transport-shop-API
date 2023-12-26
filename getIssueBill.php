@@ -23,6 +23,7 @@ if (isset($_GET['isAdd']) && $_GET['isAdd'] == 'true') {
     bill.id_address,
     bill.id_product,
     bill.status,
+    bill.image as billImage,
     address.id as addressId,
     address.username,
     address.tel,
@@ -33,7 +34,7 @@ if (isset($_GET['isAdd']) && $_GET['isAdd'] == 'true') {
     address.zip_code
 FROM bill
 LEFT JOIN product ON bill.id = product.billing_id
-LEFT JOIN address ON bill.id_address = address.id
+ JOIN address ON bill.id_address = address.id
 WHERE bill.id_user=?";
    /*  $select_sql = "SELECT  product.*, bill.id as billId, bill.created_at as billCreated_at, bill.updated_at as billUpdated_at,
     bill.id_user,bill.id_address, bill.id_product, bill.status FROM bill LEFT JOIN product ON bill.id = product.billing_id WHERE bill.id_user=?"; */
@@ -53,7 +54,7 @@ WHERE bill.id_user=?";
         $provinces = $row['provinces'];
         $zip_code = $row['zip_code'];
         $username = $row['username'];
-        $image = $row['image'];
+        $billImage = $row['billImage'];
 
     
         // If the billId is not yet in the data_array, add it with an empty array
@@ -68,7 +69,7 @@ WHERE bill.id_user=?";
                 'provinces' => $provinces,
                 'zip_code' => $zip_code,
                 'username' => $username,
-                'image' => $image,
+                'billImage' => $billImage,
                 'billUpdated_at' => $billUpdated_at,
                 'dataBill' => [],
             ];
