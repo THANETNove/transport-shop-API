@@ -13,7 +13,6 @@ if ($conn->connect_error) {
 }
 
 if (isset($_GET['isAdd']) && $_GET['isAdd'] == 'true') {
-    $id = $_GET['id'];
     $select_sql = "SELECT
     product.*,
     bill.id as billId,
@@ -30,15 +29,15 @@ if (isset($_GET['isAdd']) && $_GET['isAdd'] == 'true') {
     address.subdistricts,
     address.districts,
     address.provinces,
-    address.zip_code
+    address.zip_code,
+    users.customerCode
 FROM bill
 LEFT JOIN product ON bill.id = product.billing_id
 LEFT JOIN address ON bill.id_address = address.id
-WHERE bill.id_user=?";
+ JOIN users ON bill.id_user = users.id";
    /*  $select_sql = "SELECT  product.*, bill.id as billId, bill.created_at as billCreated_at, bill.updated_at as billUpdated_at,
     bill.id_user,bill.id_address, bill.id_product, bill.status FROM bill LEFT JOIN product ON bill.id = product.billing_id WHERE bill.id_user=?"; */
     $stmt = $conn->prepare($select_sql);
-    $stmt->bind_param("i", $id); // Assuming 'id' is an integer in your database
     $stmt->execute();
     $result = $stmt->get_result();
     $data_array = [];
@@ -54,6 +53,7 @@ WHERE bill.id_user=?";
         $zip_code = $row['zip_code'];
         $username = $row['username'];
         $image = $row['image'];
+        $customerCode = $row['customerCode'];
 
     
         // If the billId is not yet in the data_array, add it with an empty array
@@ -70,6 +70,7 @@ WHERE bill.id_user=?";
                 'username' => $username,
                 'image' => $image,
                 'billUpdated_at' => $billUpdated_at,
+                'customerCode' => $customerCode,
                 'dataBill' => [],
             ];
         }
