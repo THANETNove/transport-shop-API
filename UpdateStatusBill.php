@@ -22,14 +22,22 @@ if (isset($_FILES["image"]) && is_uploaded_file($_FILES["image"]["tmp_name"]) &&
 
 
     // อัปโหลดรูปภาพใหม่
-    $avatar_name = $_FILES["image"]["name"];
-    $avatar_tmp_name = $_FILES["image"]["tmp_name"];
+ 
+    $uploaded_file = $_FILES["image"]["tmp_name"];
+    $file_extension = pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION); // นำนามสกุลไฟล์
+    $new_avatar_name = uniqid() . "_" . date("Ymd_His") . "." . $file_extension;
 
-    $random_name = rand(1000, 1000000) . "-" . $current_time . '_' . $avatar_name;
+
+    $avatar_tmp_name = $_FILES["image"]["tmp_name"];
+    
+
+    $random_name = rand(1000, 1000000) . "-" .$new_avatar_name;
     $upload_name = $upload_dir . strtolower($random_name);
     $upload_name = preg_replace('/\s+/', '-', $upload_name);
     $image =  $random_name;
 
+
+ 
     if (move_uploaded_file($avatar_tmp_name, $upload_name)) {
 
         // อัปเดตข้อมูลในฐานข้อมูลเมื่อรูปภาพเปลี่ยนแปลง

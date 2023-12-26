@@ -52,10 +52,12 @@ if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
     include 'config_image_path.php'; // This specifies the upload directory
 
     if (isset($_FILES["image"]) && is_uploaded_file($_FILES["image"]["tmp_name"]) && $_FILES["image"]["error"] === 0) {
-        $avatar_name = $_FILES["image"]["name"];
+        $file_extension = pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION); // นำนามสกุลไฟล์
+        $new_avatar_name = uniqid() . "_" . date("Ymd_His") . "." . $file_extension;
+        
         $avatar_tmp_name = $_FILES["image"]["tmp_name"];
 
-        $random_name = rand(1000, 1000000) . "-" . $current_time . '_' . $avatar_name;
+        $random_name = rand(1000, 1000000) . "-" . $new_avatar_name;
         $upload_name = $upload_dir . strtolower($random_name);
         $upload_name = preg_replace('/\s+/', '-', $upload_name);
         $image =  $random_name;
