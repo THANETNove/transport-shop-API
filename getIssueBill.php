@@ -35,7 +35,7 @@ if (isset($_GET['isAdd']) && $_GET['isAdd'] == 'true') {
 FROM bill
 LEFT JOIN product ON bill.id = product.billing_id
  JOIN address ON bill.id_address = address.id
-WHERE bill.id_user=?";
+WHERE bill.id_user=?  ORDER BY bill.updated_at DESC";
    /*  $select_sql = "SELECT  product.*, bill.id as billId, bill.created_at as billCreated_at, bill.updated_at as billUpdated_at,
     bill.id_user,bill.id_address, bill.id_product, bill.status FROM bill LEFT JOIN product ON bill.id = product.billing_id WHERE bill.id_user=?"; */
     $stmt = $conn->prepare($select_sql);

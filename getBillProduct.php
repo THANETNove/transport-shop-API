@@ -35,7 +35,7 @@ if (isset($_GET['isAdd']) && $_GET['isAdd'] == 'true') {
 FROM product
  LEFT JOIN bill ON  product.billing_id = bill.id 
  LEFT JOIN address ON bill.id_address = address.id
- WHERE bill.id_user=?";
+ WHERE bill.id_user=? ORDER BY bill.updated_at DESC";
     $stmt = $conn->prepare($select_sql);
     $stmt->bind_param("i", $id); // Assuming 'id' is an integer in your database
     $stmt->execute();
