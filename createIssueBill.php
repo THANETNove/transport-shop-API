@@ -16,6 +16,7 @@ if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
     $id = $_POST['id'];
     $id_address = $_POST['id_address'];
     $data = $_POST['data'];
+    $point = $_POST['point'];
     $dataArray = json_decode($data, true);
 
     // Extract and store the 'id' values in a new array
@@ -48,6 +49,15 @@ if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
             // Close the statement
             $stmt2->close();
         }
+
+    
+        $stmt3 = $conn->prepare("UPDATE users SET money = ? WHERE id = ?");
+        $stmt3->bind_param("ii", $point, $id);
+        $stmt3->execute();
+        $stmt3->close();
+
+
+        
         echo json_encode(['message' => 'product update successfully!']);
     } else {
         echo json_encode(['error' => 'Error updating bill']);
