@@ -16,7 +16,7 @@ if (isset($_GET['isAdd']) && $_GET['isAdd'] == 'true') {
     $id = $_GET['id'];
     $select_sql = "SELECT * FROM slip WHERE code_user = ?";
     $stmt = $conn->prepare($select_sql);
-    $stmt->bind_param("i", $id); // Assuming 'id' is an integer in your database
+    $stmt->bind_param("s", $id); // Assuming 'id' is an integer in your database
     $stmt->execute();
     $result = $stmt->get_result();
     $data_array = [];

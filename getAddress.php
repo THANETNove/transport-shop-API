@@ -14,6 +14,7 @@ if ($conn->connect_error) {
 
 if (isset($_GET['isAdd']) && $_GET['isAdd'] == 'true') {
     $id = $_GET['id'];
+
     $select_sql = "SELECT * FROM address WHERE id_user=?";
     $stmt = $conn->prepare($select_sql);
     $stmt->bind_param("i", $id); // Assuming 'id' is an integer in your database
