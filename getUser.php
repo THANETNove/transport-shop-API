@@ -24,7 +24,7 @@ if (isset($_GET)) {
             while ($row = $result->fetch_assoc()) {
                 $data[] = $row;
             }
-            echo json_encode($data);
+            echo json_encode(['message' => 'product type get successfully!', 'data' => $data]);
         } else {
             echo "0 results";
         } //
