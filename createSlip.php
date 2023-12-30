@@ -44,17 +44,19 @@ if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
         $upload_name = $upload_slip . strtolower($random_name);
         $upload_name = preg_replace('/\s+/', '-', $upload_name);
         $image =  $random_name;
+        $status = "รอการตรวจสอบ";
         
         if (move_uploaded_file($avatar_tmp_name, $upload_name)) {
             $stmt = $conn->prepare("INSERT INTO slip (
-                code_user, date, time, money, image) VALUES (?,?,?,?,?)");
+                code_user, date, time, money,statusSlip, image) VALUES (?,?,?,?,?,?)");
 
             $stmt->bind_param(
-                "sssss",
+                "ssssss",
                 $id,
                 $date,
                 $time,
                 $money,
+                $status,
                 $image,
             );
 
