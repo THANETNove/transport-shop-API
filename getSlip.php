@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 
 if (isset($_GET['isAdd']) && $_GET['isAdd'] == 'true') {
     $id = $_GET['id'];
-    $select_sql = "SELECT * FROM slip WHERE code_user = ?";
+    $select_sql = "SELECT * FROM slip WHERE code_user = ?  ORDER BY id DESC";
     $stmt = $conn->prepare($select_sql);
     $stmt->bind_param("s", $id); // Assuming 'id' is an integer in your database
     $stmt->execute();
