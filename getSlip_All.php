@@ -15,7 +15,7 @@ if ($conn->connect_error) {
 if (isset($_GET['isAdd']) && $_GET['isAdd'] == 'true') {
     $id = $_GET['id'];
     $select_sql = "SELECT
-    slip.* FROM slip";
+    slip.* FROM slip ORDER BY slip.id DESC";
     $stmt = $conn->prepare($select_sql);
     $stmt->execute();
     $result = $stmt->get_result();
