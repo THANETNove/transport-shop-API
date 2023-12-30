@@ -35,7 +35,7 @@ if ($status == "อนุมัติ") {
     $stmt_users->bind_param("ss", $total_money, $code_user);
       // Execute $stmt_users only when $status is "อนุมัติ"
     if ($stmt_users->execute()) {
-        echo json_encode(['message_money' => 'users update successfully!']);
+       /*  echo json_encode(['message_money' => 'users update successfully!']); */
     } else {
         echo json_encode(['error' => 'Error update users: ' . $stmt_users->error]);
     }
