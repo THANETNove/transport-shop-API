@@ -71,6 +71,45 @@ if (isset($_FILES["image"]) && is_uploaded_file($_FILES["image"]["tmp_name"]) &&
          $id,    
      );
 
+     if ($status == "ถูกยกเลิก") {
+        // Fetch total_amount and id_user from bill table
+        $stmt_b = $conn->prepare("SELECT total_amount, id_user FROM bill WHERE id = ?");
+        $stmt_b->bind_param("s", $id);
+        $stmt_b->execute();
+        $stmt_b->bind_result($totalAmount, $userId);
+        $stmt_b->fetch();
+        $stmt_b->close();
+
+        if ($userId) {
+            // Fetch money from users table based on id_user
+            $stmt_u = $conn->prepare("SELECT money FROM users WHERE id = ?");
+            $stmt_u->bind_param("s", $userId);
+            $stmt_u->execute();
+            $stmt_u->bind_result($money);
+            $stmt_u->fetch();
+            $stmt_u->close();
+
+            // Calculate the sum of total_amount and money
+            $price = $totalAmount + $money;
+
+            $stmt3 = $conn->prepare("UPDATE users SET money = ? WHERE id = ?");
+            $stmt3->bind_param("ii", $price, $userId);
+            $stmt3->execute();
+            $stmt3->close();
+
+            // Now $price contains the sum of total_amount and money
+            /* echo "Total Price: $price"; */
+        } else {
+            echo "Bill not found";
+        }
+
+        
+       /*  $stmt3 = $conn->prepare("UPDATE users SET money = ? WHERE id = ?");
+        $stmt3->bind_param("ii", $point, $id);
+        $stmt3->execute();
+        $stmt3->close(); */
+     }
+
     if ($stmt->execute()) {
 
         echo json_encode(['message' => 'Bill Status updated successfully!  2']);
