@@ -17,6 +17,7 @@ if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
     $id_address = $_POST['id_address'];
     $data = $_POST['data'];
     $point = $_POST['point'];
+    $price = $_POST['price'];
     $dataArray = json_decode($data, true);
 
     // Extract and store the 'id' values in a new array
@@ -29,8 +30,8 @@ if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
 
     $status = "รอตรวจสอบ";
 
-    $stmt = $conn->prepare("INSERT INTO bill (id_user, id_address, id_product, status) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("ssss", $id, $id_address, json_encode($idArray), $status);
+    $stmt = $conn->prepare("INSERT INTO bill (id_user, id_address, id_product,total_amount, status) VALUES (?, ?, ?, ?,?)");
+    $stmt->bind_param("sssss", $id, $id_address, json_encode($idArray),$price, $status);
 
     if ($stmt->execute()) {
         $insertedId = $conn->insert_id;
