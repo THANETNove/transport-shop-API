@@ -53,7 +53,7 @@ if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
 
     
         $stmt3 = $conn->prepare("UPDATE users SET money = ? WHERE id = ?");
-        $stmt3->bind_param("ii", $point, $id);
+        $stmt3->bind_param("di", $point, $id);
         $stmt3->execute();
         $stmt3->close();
 
