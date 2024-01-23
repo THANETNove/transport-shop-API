@@ -13,7 +13,6 @@ if ($conn->connect_error) {
 }
 
 if (isset($_GET['isAdd']) && $_GET['isAdd'] == 'true') {
-    $id = $_GET['id'];
     $select_sql = "SELECT
     product.*  ,
     bill.id as billId,
@@ -34,10 +33,9 @@ if (isset($_GET['isAdd']) && $_GET['isAdd'] == 'true') {
     address.zip_code
 FROM product
  LEFT JOIN bill ON  product.billing_id = bill.id 
- LEFT JOIN address ON bill.id_address = address.id
- WHERE bill.id_user=? ORDER BY bill.id DESC";
+ LEFT JOIN address ON bill.id_address = address.id WHERE  product.billing_id IS NOT NULL ORDER BY bill.id DESC";
     $stmt = $conn->prepare($select_sql);
-    $stmt->bind_param("i", $id); // Assuming 'id' is an integer in your database
+    // Assuming 'id' is an integer in your database
     $stmt->execute();
     $result = $stmt->get_result();
     $data_array = [];
