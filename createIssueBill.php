@@ -28,11 +28,9 @@ if (isset($_POST['isAdd']) && $_POST['isAdd'] == 'true') {
         }
     }
 
-    $status = "รอตรวจสอบ";
-
-    $stmt = $conn->prepare("INSERT INTO bill (id_user, id_address, id_product,total_amount, status) VALUES (?, ?, ?, ?,?)");
+    $id_product_json = json_encode($idArray); // แปลงเป็น JSON string ก่อนเก็บลงในฐานข้อมูล
+    $stmt = $conn->prepare("INSERT INTO bill (id_user, id_address, id_product, total_amount, status) VALUES (?, ?, ?, ?, ?)");
     $stmt->bind_param("sssss", $id, $id_address, json_encode($idArray),$price, $status);
-
     if ($stmt->execute()) {
         $insertedId = $conn->insert_id;
 
